@@ -58,11 +58,10 @@ func (dl *Dashlane) LatestVault(login string, uki string) (map[string]interface{
 	var v map[string]interface{}
 
 	dec := json.NewDecoder(strings.NewReader(body))
+	logrus.Debug("vault: Received: ", len(body))
 	if err := dec.Decode(&v); err != nil {
 		return nil, fmt.Errorf("invalid JSON %v", body)
 	}
-
-	logrus.Debug("vault: ", v)
 
 	if v["fullBackupFile"] == nil {
 		return nil, fmt.Errorf("Error, no full backup returned")
