@@ -9,6 +9,8 @@ import (
 	"net/url"
 	"runtime"
 	"time"
+
+	appNet "github.com/masterzen/dashlane-cli/pkg/net"
 )
 
 const SENDTOKEN_URI = "https://ws1.dashlane.com/6/authentication/sendtoken"
@@ -27,7 +29,7 @@ func (dl *Dashlane) SendToken(login string) (SendTokenResult, error) {
 	data.Set("login", login)
 	data.Set("isOTPAware", "true")
 
-	body, err := PostData(SENDTOKEN_URI, data)
+	body, err := appNet.PostData(SENDTOKEN_URI, data)
 	if err != nil {
 		return UKI_ERROR, err
 	}
@@ -51,7 +53,7 @@ func (dl *Dashlane) RegisterUki(devicename, login, token, uki string) error {
 	data.Set("platform", "webaccess")
 	data.Set("temporary", "0")
 
-	body, err := PostData(REGISTER_URI, data)
+	body, err := appNet.PostData(REGISTER_URI, data)
 	if err != nil {
 		return err
 	}

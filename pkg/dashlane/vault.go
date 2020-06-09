@@ -55,7 +55,7 @@ type VaultList struct {
 
 type Vault struct {
 	XMLName            xml.Name    `xml:"root"`
-	List               VaultList   `xml:"KWDataList`
+	List               VaultList   `xml:"KWDataList"`
 	Notes              []VaultItem `xml:"KWSecureNote,omitempty"`
 	Passwords          []VaultItem `xml:"KWAuthentifiant,omitempty"`
 	GeneratedPasswords []VaultItem `xml:"KWGeneratedPassword,omitempty"`

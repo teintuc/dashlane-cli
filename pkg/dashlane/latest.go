@@ -7,6 +7,8 @@ import (
 	"strings"
 
 	"github.com/sirupsen/logrus"
+
+	appNet "github.com/masterzen/dashlane-cli/pkg/net"
 )
 
 const LATEST_URI = "https://ws1.dashlane.com/12/backup/latest"
@@ -21,7 +23,7 @@ func (dl *Dashlane) LatestToken(login string, code string) (string, error) {
 	data.Set("sharingTimestamp", "0")
 	data.Set("sharingSkipped", "webapp")
 
-	body, err := PostData(LATEST_URI, data)
+	body, err := appNet.PostData(LATEST_URI, data)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +52,7 @@ func (dl *Dashlane) LatestVault(login string, uki string) (map[string]interface{
 	data.Set("sharingTimestamp", "0")
 	data.Set("sharingSkipped", "webapp")
 
-	body, err := PostData(LATEST_URI, data)
+	body, err := appNet.PostData(LATEST_URI, data)
 	if err != nil {
 		return nil, err
 	}

@@ -16,10 +16,9 @@ limitations under the License.
 
 package main
 
-import (
-	"github.com/masterzen/dashlane-cli/command"
-)
+import "github.com/masterzen/dashlane-cli/prompt"
 
 func main() {
-	command.Execute()
+	// command.Execute()
+	prompt.Execute()
 }

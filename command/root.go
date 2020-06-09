@@ -2,10 +2,10 @@ package command
 
 import (
 	"path"
+	"strings"
 
 	"github.com/masterzen/dashlane-cli/pkg/dashlane"
-
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/afero"
 
 	"github.com/alecthomas/kong"
@@ -28,7 +28,8 @@ type cli struct {
 }
 
 // Execute the commands
-func Execute() {
+func Execute(command string) {
+	cmds := strings.Split(command, " ")
 
 	dir, err := homedir.Dir()
 	if err != nil {
@@ -47,7 +48,14 @@ func Execute() {
 
 	cli := new(cli)
 	kconfig := kong.Configuration(kong.JSON, DashlaneConfig)
-	kongctx := kong.Parse(cli, kconfig)
+
+	parser, err := kong.New(cli, kconfig)
+	if err != nil {
+		panic(err)
+	}
+	kongctx, err := parser.Parse(cmds)
+	parser.FatalIfErrorf(err)
+
 	err = kongctx.Run(context)
 	kongctx.FatalIfErrorf(err)
 }

@@ -3,6 +3,8 @@ package dashlane
 import (
 	"fmt"
 	"net/url"
+
+	appNet "github.com/masterzen/dashlane-cli/pkg/net"
 )
 
 type ExistResult int
@@ -21,7 +23,7 @@ func (dl *Dashlane) Exist(login string) (ExistResult, error) {
 	data.Set("login", login)
 	data.Set("isOTPAware", "true")
 
-	body, err := PostData(EXIST_URI, data)
+	body, err := appNet.PostData(EXIST_URI, data)
 	if err != nil {
 		return EXIST_ERROR, err
 	}
